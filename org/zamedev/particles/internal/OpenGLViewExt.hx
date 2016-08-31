@@ -4,30 +4,60 @@ import openfl.display.OpenGLView;
 
 #if (html5 && dom)
 
-import openfl._internal.renderer.RenderSession;
+import js.Browser;
 import openfl._internal.renderer.dom.DOMRenderer;
+import openfl._internal.renderer.RenderSession;
 import openfl.errors.Error;
 import openfl.geom.Rectangle;
 import openfl.gl.GL;
+import openfl.Lib;
 
 @:access(lime.graphics.opengl.GL)
 class OpenGLViewExt extends OpenGLView {
-    public function new() {
+    public function new() : Void {
         super();
 
         if (!OpenGLView.isSupported) {
             throw new Error("OpenGL context required");
         }
+
+        if (__initialized) {
+            __context = null;
+            __canvas = null;
+
+            __canvas = cast Browser.document.createElement("canvas");
+            __canvas.width = Lib.current.stage.stageWidth;
+            __canvas.height = Lib.current.stage.stageHeight;
+
+            __context = cast __canvas.getContext("webgl", {
+                alpha : true,
+                premultipliedAlpha : true,
+                antialias : false,
+                depth : false,
+                stencil : false
+            });
+
+            if (__context == null) {
+                __context = cast __canvas.getContext("experimental-webgl");
+            }
+
+            #if debug
+                __context = untyped WebGLDebugUtils.makeDebugContext(__context);
+            #end
+
+            GL.context = cast __context;
+        }
     }
 
     @:noCompletion
-    public override function __renderDOM(renderSession:RenderSession):Void {
+    public override function __renderDOM(renderSession : RenderSession) : Void {
         if (stage != null && __worldVisible && __renderable) {
             if (!__added) {
                 renderSession.element.appendChild(__canvas);
                 __added = true;
 
                 DOMRenderer.initializeElement(this, __canvas, renderSession);
+                __style.setProperty("pointer-events", "none", null);
             }
 
             if (__worldZ != ++renderSession.z) {
@@ -39,7 +69,7 @@ class OpenGLViewExt extends OpenGLView {
                 GL.context = cast __context;
 
                 if (scrollRect == null) {
-                    __render(new Rectangle(0, 0, __canvas.width, __canvas.height));
+                    __render(new Rectangle(0.0, 0.0, __canvas.width, __canvas.height));
                 } else {
                     __render(new Rectangle(x + scrollRect.x, y + scrollRect.y, scrollRect.width, scrollRect.height));
                 }

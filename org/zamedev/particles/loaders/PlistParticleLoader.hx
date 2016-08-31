@@ -1,6 +1,5 @@
 package org.zamedev.particles.loaders;
 
-import haxe.io.Path;
 import openfl.Assets;
 import openfl.errors.Error;
 import org.zamedev.particles.ParticleSystem;
@@ -8,20 +7,19 @@ import org.zamedev.particles.util.MathHelper;
 import org.zamedev.particles.util.ParticleColor;
 import org.zamedev.particles.util.ParticleVector;
 
-using org.zamedev.lib.DynamicTools;
-using org.zamedev.lib.XmlExt;
+using org.zamedev.particles.util.DynamicTools;
+using org.zamedev.particles.util.XmlExt;
 
 class PlistParticleLoader {
-    public static function load(path:String):ParticleSystem {
-		trace("loading: " + path);
+    public static function load(path : String) : ParticleSystem {
         var root = Xml.parse(Assets.getText(path)).firstElement().firstElement();
 
         if (root.nodeName != "dict") {
             throw new Error('Expecting "dict", but "${root.nodeName}" found');
         }
 
-        var key:String = null;
-        var map:Map<String, Dynamic> = new Map<String, Dynamic>();
+        var key : String = null;
+        var map : Map<String, Dynamic> = new Map<String, Dynamic>();
 
         for (node in root.elements()) {
             if (key == null) {
@@ -114,20 +112,20 @@ class PlistParticleLoader {
         ps.tangentialAccelerationVariance = map["tangentialAccelVariance"].asFloat();
         ps.blendFuncSource = map["blendFuncSource"].asInt();
         ps.blendFuncDestination = map["blendFuncDestination"].asInt();
-        ps.textureBitmapData = Assets.getBitmapData(Path.directory(path) + "/" + map["textureFileName"].asString());
+        ps.textureBitmapData = ParticleLoader.loadTexture(map["textureImageData"].asString(), map["textureFileName"].asString(), path);
         ps.yCoordMultiplier = (map["yCoordFlipped"].asInt() == 1 ? -1.0 : 1.0);
 
         return ps;
     }
 
-    private static function asVector(map:Map<String, Dynamic>, prefix:String):ParticleVector {
+    private static function asVector(map : Map<String, Dynamic>, prefix : String) : ParticleVector {
         return {
             x: map['${prefix}x'].asFloat(),
             y: map['${prefix}y'].asFloat(),
         };
     }
 
-    private static function asColor(map:Map<String, Dynamic>, prefix:String):ParticleColor {
+    private static function asColor(map : Map<String, Dynamic>, prefix : String) : ParticleColor {
         return {
             r: map['${prefix}Red'].asFloat(),
             g: map['${prefix}Green'].asFloat(),

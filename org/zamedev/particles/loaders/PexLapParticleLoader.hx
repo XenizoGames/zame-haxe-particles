@@ -1,6 +1,5 @@
 package org.zamedev.particles.loaders;
 
-import haxe.io.Path;
 import openfl.Assets;
 import openfl.errors.Error;
 import org.zamedev.particles.ParticleSystem;
@@ -9,14 +8,14 @@ import org.zamedev.particles.util.ParticleColor;
 import org.zamedev.particles.util.ParticleVector;
 
 class PexLapParticleLoader {
-    public static function load(path:String):ParticleSystem {
+    public static function load(path : String) : ParticleSystem {
         var root = Xml.parse(Assets.getText(path)).firstElement();
 
         if (root.nodeName != "particleEmitterConfig" && root.nodeName != "lanicaAnimoParticles") {
             throw new Error('Expecting "particleEmitterConfig" or "lanicaAnimoParticles", but "${root.nodeName}" found');
         }
 
-        var map:Map<String, Xml> = new Map<String, Xml>();
+        var map : Map<String, Xml> = new Map<String, Xml>();
 
         for (node in root.elements()) {
             map[node.nodeName] = node;
@@ -61,21 +60,21 @@ class PexLapParticleLoader {
         ps.tangentialAccelerationVariance = parseFloatNode(map["tangentialAccelVariance"]);
         ps.blendFuncSource = parseIntNode(map["blendFuncSource"]);
         ps.blendFuncDestination = parseIntNode(map["blendFuncDestination"]);
-        ps.textureBitmapData = Assets.getBitmapData(Path.directory(path) + "/" + map["texture"].get("name"));
+        ps.textureBitmapData = ParticleLoader.loadTexture(map["texture"].get("data"), map["texture"].get("name"), path);
         ps.yCoordMultiplier = (parseIntNode(map["yCoordFlipped"]) == 1 ? -1.0 : 1.0);
 
         return ps;
     }
 
-    private static function parseIntNode(node:Xml):Int {
+    private static function parseIntNode(node : Xml) : Int {
         return (node == null ? 0 : parseIntString(node.get("value")));
     }
 
-    private static function parseFloatNode(node:Xml):Float {
+    private static function parseFloatNode(node : Xml) : Float {
         return (node == null ? 0 : parseFloatString(node.get("value")));
     }
 
-    private static function parseVectorNode(node:Xml):ParticleVector {
+    private static function parseVectorNode(node : Xml) : ParticleVector {
         if (node == null) {
             return {
                 x: 0.0,
@@ -89,7 +88,7 @@ class PexLapParticleLoader {
         };
     }
 
-    private static function parseColorNode(node:Xml):ParticleColor {
+    private static function parseColorNode(node : Xml) : ParticleColor {
         if (node == null) {
             return {
                 r: 0.0,
@@ -107,7 +106,7 @@ class PexLapParticleLoader {
         };
     }
 
-    private static function parseIntString(s:String):Int {
+    private static function parseIntString(s : String) : Int {
         if (s == null) {
             return 0;
         }
@@ -116,7 +115,7 @@ class PexLapParticleLoader {
         return (result == null ? 0 : result);
     }
 
-    private static function parseFloatString(s:String):Float {
+    private static function parseFloatString(s : String) : Float {
         if (s == null) {
             return 0;
         }

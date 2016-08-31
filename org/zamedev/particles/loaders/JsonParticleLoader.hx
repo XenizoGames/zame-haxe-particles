@@ -1,19 +1,18 @@
 package org.zamedev.particles.loaders;
 
 import haxe.Json;
-import haxe.io.Path;
 import openfl.Assets;
-import org.zamedev.lib.DynamicExt;
 import org.zamedev.particles.ParticleSystem;
+import org.zamedev.particles.util.DynamicExt;
 import org.zamedev.particles.util.MathHelper;
 import org.zamedev.particles.util.ParticleColor;
 import org.zamedev.particles.util.ParticleVector;
 
-using org.zamedev.lib.DynamicTools;
+using org.zamedev.particles.util.DynamicTools;
 
 class JsonParticleLoader {
-    public static function load(path:String):ParticleSystem {
-        var map:DynamicExt = Json.parse(Assets.getText(path));
+    public static function load(path : String) : ParticleSystem {
+        var map : DynamicExt = Json.parse(Assets.getText(path));
         var ps = new ParticleSystem();
 
         ps.emitterType = map["emitterType"].asInt();
@@ -53,20 +52,20 @@ class JsonParticleLoader {
         ps.tangentialAccelerationVariance = map["tangentialAccelVariance"].asFloat();
         ps.blendFuncSource = map["blendFuncSource"].asInt();
         ps.blendFuncDestination = map["blendFuncDestination"].asInt();
-        ps.textureBitmapData = Assets.getBitmapData(Path.directory(path) + "/" + map["textureFileName"].asString());
+        ps.textureBitmapData = ParticleLoader.loadTexture(map["textureImageData"].asString(), map["textureFileName"].asString(), path);
         ps.yCoordMultiplier = (map["yCoordFlipped"].asInt() == 1 ? -1.0 : 1.0);
 
         return ps;
     }
 
-    private static function asVector(map:DynamicExt, prefix:String):ParticleVector {
+    private static function asVector(map : DynamicExt, prefix : String) : ParticleVector {
         return {
             x: map['${prefix}x'].asFloat(),
             y: map['${prefix}y'].asFloat(),
         };
     }
 
-    private static function asColor(map:DynamicExt, prefix:String):ParticleColor {
+    private static function asColor(map : DynamicExt, prefix : String) : ParticleColor {
         return {
             r: map['${prefix}Red'].asFloat(),
             g: map['${prefix}Green'].asFloat(),
