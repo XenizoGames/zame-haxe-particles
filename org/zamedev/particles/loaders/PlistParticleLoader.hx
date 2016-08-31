@@ -13,6 +13,7 @@ using org.zamedev.lib.XmlExt;
 
 class PlistParticleLoader {
     public static function load(path:String):ParticleSystem {
+		trace("loading: " + path);
         var root = Xml.parse(Assets.getText(path)).firstElement().firstElement();
 
         if (root.nodeName != "dict") {

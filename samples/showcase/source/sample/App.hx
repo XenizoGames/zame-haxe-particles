@@ -87,8 +87,96 @@ class App extends Sprite {
         particleSystemList.push(ParticleLoader.load("particle/sun.plist"));
         particleSystemList.push(ParticleLoader.load("particle/iris.plist"));
         particleSystemList.push(ParticleLoader.load("particle/hyperflash.plist"));
-        particleSystemList.push(ParticleLoader.load("particle/dust.plist"));
-
+        particleSystemList.push(ParticleLoader.load("particle/airStars.plist"			));
+		
+        particleSystemList.push(ParticleLoader.load("particle/iceDamage.plist"           ));
+        particleSystemList.push(ParticleLoader.load("particle/airDamage.plist"           ));
+        particleSystemList.push(ParticleLoader.load("particle/newAltarFlames.plist"      ));
+        particleSystemList.push(ParticleLoader.load("particle/earthDamage.plist"         ));
+        particleSystemList.push(ParticleLoader.load("particle/explosion.plist"           ));
+        particleSystemList.push(ParticleLoader.load("particle/explosionSmoke.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/fireDamage.plist"          ));
+        particleSystemList.push(ParticleLoader.load("particle/newHeroCharge.plist"       ));
+        particleSystemList.push(ParticleLoader.load("particle/itemPickup.plist"          ));
+        particleSystemList.push(ParticleLoader.load("particle/lightDamage.plist"         ));
+        particleSystemList.push(ParticleLoader.load("particle/skid.plist"	            )); 
+        particleSystemList.push(ParticleLoader.load("particle/waterDamage.plist"         ));
+        particleSystemList.push(ParticleLoader.load("particle/windPanelEffect.plist"     ));
+        particleSystemList.push(ParticleLoader.load("particle/bulletFireEnemy.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/bulletFireHero.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/bulletFireHero3.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/bulletWaterHero.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/healingItem.plist"	        ));
+        particleSystemList.push(ParticleLoader.load("particle/statusItem.plist"	        ));
+        
+		particleSystemList.push(ParticleLoader.load("particle/useRimon.plist"	        )); 
+        particleSystemList.push(ParticleLoader.load("particle/useShofar.plist"	        ));
+        particleSystemList.push(ParticleLoader.load("particle/vanityItem.plist"	        ));
+        particleSystemList.push(ParticleLoader.load("particle/useItemCarousel.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/beamCannonPhysical.plist"  ));
+        particleSystemList.push(ParticleLoader.load("particle/blueKiteDeath.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/cyanKiteDeath.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/goldKiteDeath.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/greenKiteDeath.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/limeKiteDeath.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/pinkKiteDeath.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/redKiteDeath.plist"	    )); 
+        particleSystemList.push(ParticleLoader.load("particle/yellowKiteDeath.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/drainBeam.plist"	        ));
+        particleSystemList.push(ParticleLoader.load("particle/tinyFlames.plist"	        ));
+        particleSystemList.push(ParticleLoader.load("particle/fountain.plist"	        )); 
+        particleSystemList.push(ParticleLoader.load("particle/altarDeath.plist"		    ));
+        particleSystemList.push(ParticleLoader.load("particle/resistAirDamage.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/resistEarthDamage.plist"   ));
+        particleSystemList.push(ParticleLoader.load("particle/resistFireDamage.plist"	)); 
+        
+		particleSystemList.push(ParticleLoader.load("particle/resistWaterDamage.plist"   ));
+        particleSystemList.push(ParticleLoader.load("particle/resistIceDamage.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/resistLightDamage.plist"   ));
+        particleSystemList.push(ParticleLoader.load("particle/iris.plist"		        )); 
+        particleSystemList.push(ParticleLoader.load("particle/enemyExplosion.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/miniFlames.plist"		    ));
+        particleSystemList.push(ParticleLoader.load("particle/statUp.plist"		        ));
+        particleSystemList.push(ParticleLoader.load("particle/statDown.plist"		    )); 
+        particleSystemList.push(ParticleLoader.load("particle/statusStun.plist"		    ));
+        particleSystemList.push(ParticleLoader.load("particle/statusConfuse.plist"	    ));
+        particleSystemList.push(ParticleLoader.load("particle/statusSlow.plist"		    ));
+        
+		particleSystemList.push(ParticleLoader.load("particle/statusBlind.plist"		    ));
+        particleSystemList.push(ParticleLoader.load("particle/statusFear.plist"		    ));
+        particleSystemList.push(ParticleLoader.load("particle/statusDisarm.plist"		)); 
+        particleSystemList.push(ParticleLoader.load("particle/statusHaste.plist"		    ));
+        particleSystemList.push(ParticleLoader.load("particle/statusRegen.plist"		    ));
+        particleSystemList.push(ParticleLoader.load("particle/statusSick.plist"          ));
+		
+		particleSystemList.push(ParticleLoader.load("particle/pinkBlubber.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/pastelFirework.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/noxiousFart.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/newSun.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/nebia.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/laser.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/hypnotron.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/hyperbeam.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/hellFire.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/heart.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/flame.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/featherScatter.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/fastGalaxy.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/emmassharing.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/electrons.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/dazedStars.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/crazyBlue.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/cosmicCloud.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/BuildingCrumble.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/blackhole.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/3050.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/whiteRipple.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/warpField.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/tourni.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/test001.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/simpleSmoke.plist"		    ));
+		particleSystemList.push(ParticleLoader.load("particle/pollenInTheSun.plist"		    ));
+		
         for (particleSystem in particleSystemList) {
             particlesRenderer.addParticleSystem(particleSystem);
         }
