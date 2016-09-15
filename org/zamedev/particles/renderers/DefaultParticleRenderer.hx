@@ -8,14 +8,20 @@ class DefaultParticleRenderer {
             if (OpenGLView.isSupported) {
                 return new GLViewParticleRenderer();
             } else {
-                return new DrawTilesParticleRenderer();
+                #if (openfl < "4.0")
+                    return new DrawTilesParticleRenderer();
+                #else
+                    return new TilemapParticleRenderer();
+                #end
             }
-        #elseif (flash11 && zameparticles_stage3d)
+        #elseif (flash11 && zameparticles_stage3d && openfl < "4.0")
             return new Stage3DParticleRenderer();
         #elseif flash
             return new SpritesParticleRenderer();
-        #else
+        #elseif (openfl < "4.0")
             return new DrawTilesParticleRenderer();
+        #else
+            return new TilemapParticleRenderer();
         #end
     }
 }
