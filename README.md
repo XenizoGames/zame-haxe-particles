@@ -4,36 +4,20 @@
 
 ![](http://blog.zame-dev.org/wp-content/uploads/2015/03/Screen-Shot-2015-03-18-at-12.53.43.png)
 
-[Demo](http://blog.zame-dev.org/pub/particles/html5-dom-v3/)
+[Demo (old version)](http://blog.zame-dev.org/pub/particles/html5-dom-v3/)
 
 Features:
 
  - Can load files from Particle Designer or [Particle Designer 2](https://71squared.com/en/particledesigner).
  - Support for embedded textures, both zipped or not.
  - Can load files from [Starling Particle Editor](http://onebyonedesign.com/flash/particleeditor/).
- - Has 5 renderers - sprites, drawTiles (OpenFL 3) / tilemap (OpenFL 4), stage3d (OpenFL 4), and GL renderer.
+ - Has 3 renderers - Sprites, Tilemap (OpenFL 4), and GL renderer.
 
-**NOTE: work in progress, more features coming.**
+**Work in progress, more features coming.**
 
-## Important note about OpenFL 4
+## OpenFL 3 note
 
-**Tilesheet and tilemap**
-
-Tilesheet support was removed from OpenFL 4 in favour of new Tilemap / Tilesheet classes. That's fine, but:
-
-- new API doesn't support rotating about arbitrary pivot point (however this can be achieved by direct modification of transform matrix);
-- new API doesn't support color transform;
-- new API doesn't support blending modes.
-
-You can use this renderer, it fast, but ugly.
-
-**Sprites**
-
-Work well for flash, work very slow for other targets (http://community.openfl.org/t/openfl-4-sprites-and-or-haxe-3-3-slow-as-hell/8132).
-
-**GL renderer**
-
-Still work fine, but only for html5 and only in `-Ddom` mode.
+This version supports OpenFL 4 only. If you still use OpenFL 3, find older version under branch `openfl3`.
 
 ## Installation
 
@@ -54,7 +38,6 @@ haxelib git zame-particles https://github.com/restorer/zame-haxe-particles.git
 First of all, append following to your project.xml:
 
 ```xml
-<haxedef name="haxeJSON" />
 <haxelib name="zame-particles" />
 ```
 
@@ -108,18 +91,45 @@ Embedded textures is **supported**, hovewer it is not recommended to use them fo
 
   - html5 with `-Ddom` (GL renderer) - [link](http://blog.zame-dev.org/pub/particles/html5-dom-v3/)
   - html5 in canvas mode (drawTiles renderer) - [link](http://blog.zame-dev.org/pub/particles/html5-canvas-v3/)
-  - flash (sprites renderer) - [link](http://blog.zame-dev.org/pub/particles/flash-v3.swf)
-  - flash (stage3d renderer) - [link](http://blog.zame-dev.org/pub/particles/flash-stage3d-v3/)
+  - flash (old version of sprites renderer) - [link](http://blog.zame-dev.org/pub/particles/flash-v3.swf)
 
 GL renderer is the best choise for html5 (with `-Ddom`) - it support many features and super fast. It use "hacked" version of OpenGLView to be able to add canvas with proper z-index. However GL renderer is available **only** for html with `-Ddom`.
 
-Sprites renderer is best for flash, because it support color effects via ColorTransform. But this renderer is slow.
-If you use [TilesheetStage3D](https://github.com/as3boyan/TilesheetStage3D) library you may consider of using stage3d renderer, because it has much better performance.
+Sprites renderer is best for flash, because it support color effects. Also use sprites renderer for cpp target (mac, linux, windows, android, ios) with OpenFL 4.
 
-All other targets should use drawTiles renderer:
+All other targets should use Tilemap renderer.
 
-  - html5 in canvas mode - still pretty fast, doesn't support color effects. Can render incorrectly due to bug in openfl, please apply [this patch](https://github.com/openfl/openfl/pull/1113) ([or this for earlier versions of openfl](https://github.com/openfl/openfl/pull/434)) if you encounter it.
-  - native - fast, support color effects, hovewer in some cases GL renderer looks better.
+  - html5 in canvas mode - fast, but doesn't support color effects.
+  - native - fast and doesn't support color effects too (but this can be changed in future).
+
+**DefaultParticleRenderer**
+
+Usually you don't need to choose renderer manually, just use `DefaultParticleRenderer.createInstance()` to create best renderer.
+
+**Renderers comparison**
+
+| Target / Renderer | GLView | Sprites | Tilemap |
+|---|---|---|---|---|---|
+| html5<br />`-Ddom` | **effects:** full,<br />**speed:** fast,<br /><br />**best choise** | **effects:** no,<br />**speed:** very slow | **effects:** no,<br />**speed:** slow |
+| html5<br />`-Dcanvas` | n/a | **effects:** no,<br />**speed:** almost fast | **effects:** no,<br />**speed:** fast,<br /><br />**best choise** |
+| html5<br />`-Dwebgl` | n/a | **effects:** almost full,<br />**speed:** almost fast,<br /><br />**best choise** | **effects:** no,<br />**speed:** fast |
+| cpp | n/a | **effects:** almost full,<br />**speed:** almost fast,<br /><br />**best choise** | **effects:** no,<br />**speed:** fast |
+| neko | n/a | **effects:** almost full,<br />**speed:** very slow | **effects:** no,<br />**speed:** almost fast,<br /><br />**best choise** |
+| flash | n/a | **effects:** partial,<br />**speed:** not so slow,<br /><br />**best choise** | **effects:** no,<br />**speed:** not so slow |
+
+## Product support
+
+Product still is in development (but not active).
+
+| Feature | Support status |
+|---|---|
+| New features | Yes |
+| Non-critical bugfixes | Yes |
+| Critical bugfixes | Yes |
+| Pull requests | Accepted (after review) |
+| Issues | Monitored |
+| OpenFL version planned to support | Up to 4.x, and probably later, if Tilemap wouldn't be deprecated like Tilesheet |
+| Estimated end-of-life | Up to 2019 |
 
 ## Roadmap for future
 
@@ -130,11 +140,14 @@ All other targets should use drawTiles renderer:
 - [x] Implement SpritesRenderer
 - [x] Implement Stage3DRenderer
 - [x] Implement TilemapRenderer
-- [ ] Support for lime / snow directly without openfl / luxeengine
-- [ ] Support for HaxeFlixel and / or HaxePunk?
+- [x] Fix rotation calculations (to be the same for all renderers)
 - [x] Partial support for pixi particles
 - [ ] Full support for pixi particles
-- [ ] Fix rotation calculations (to be the same for all renderers)
+- [ ] Allow to pass BitmapData to loader
+- [ ] Allow to change particle system parameters dynamically
+- [ ] Move non openfl-related stuff to core (particle, particle system, utils, base loaders)
+- [ ] Support for lime / snow directly without openfl / luxeengine
+- [ ] Support for HaxeFlixel and / or HaxePunk?
 - [ ] Support KHA directly in this library
 
 ## KHA port by RafaelOliveira
