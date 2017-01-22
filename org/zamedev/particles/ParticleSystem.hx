@@ -61,6 +61,7 @@ class ParticleSystem {
     public var yCoordMultiplier : Float;
     public var emissionFreq : Float;
     public var forceSquareTexture : Bool;
+	public var textureFileName : String;
 
     private var prevTime : Float;
     private var emitCounter : Float;

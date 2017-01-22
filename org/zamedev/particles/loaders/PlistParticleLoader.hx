@@ -12,7 +12,7 @@ using org.zamedev.particles.util.XmlExt;
 
 class PlistParticleLoader {
     public static function load(path : String) : ParticleSystem {
-        var root = Xml.parse(Assets.getText(path)).firstElement().firstElement();
+        var root = Xml.parse(path).firstElement().firstElement();
 
         if (root.nodeName != "dict") {
             throw new Error('Expecting "dict", but "${root.nodeName}" found');
@@ -112,7 +112,8 @@ class PlistParticleLoader {
         ps.tangentialAccelerationVariance = map["tangentialAccelVariance"].asFloat();
         ps.blendFuncSource = map["blendFuncSource"].asInt();
         ps.blendFuncDestination = map["blendFuncDestination"].asInt();
-        ps.textureBitmapData = ParticleLoader.loadTexture(map["textureImageData"].asString(), map["textureFileName"].asString(), path);
+		ps.textureFileName = map["textureFileName"].asString();
+        //ps.textureBitmapData = ParticleLoader.loadTexture(map["textureImageData"].asString(), ps.textureFileName, path);
         ps.yCoordMultiplier = (map["yCoordFlipped"].asInt() == 1 ? -1.0 : 1.0);
         ps.forceSquareTexture = true;
 
