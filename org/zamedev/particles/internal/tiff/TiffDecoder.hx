@@ -10,7 +10,7 @@ class TiffDecoder {
     private var isBigEndian : Bool;
     private var ifdOffset : Int;
 
-    public function new(data : Bytes) : Void {
+    public function new(data : Bytes) {
         if (data.length < 8) {
             throw "invalid header: size";
         }
@@ -168,10 +168,10 @@ class TiffDecoder {
                 var count = Std.int(stripByteCounts[i] / 4);
 
                 for (j in 0 ... count) {
+                    var a = ba.readUnsignedByte();
                     var r = ba.readUnsignedByte();
                     var g = ba.readUnsignedByte();
                     var b = ba.readUnsignedByte();
-                    var a = ba.readUnsignedByte();
 
                     pixels.writeByte(a);
                     pixels.writeByte(r);
@@ -185,22 +185,25 @@ class TiffDecoder {
                 var count = Std.int(stripByteCounts[i] / 4);
 
                 for (j in 0 ... count) {
-                    pixels.writeByte(data.get(offset + 3));
-                    pixels.writeByte(data.get(offset + 0));
-                    pixels.writeByte(data.get(offset + 1));
-                    pixels.writeByte(data.get(offset + 2));
+                    #if flash
+                        pixels.writeByte(data.get(offset + 3));
+                        pixels.writeByte(data.get(offset + 0));
+                        pixels.writeByte(data.get(offset + 1));
+                        pixels.writeByte(data.get(offset + 2));
+                    #else
+                        pixels.writeByte(data.get(offset + 0));
+                        pixels.writeByte(data.get(offset + 1));
+                        pixels.writeByte(data.get(offset + 2));
+                        pixels.writeByte(data.get(offset + 3));
+                    #end
+
                     offset += 4;
                 }
             }
         #end
 
         pixels.position = 0;
-
-        return {
-            width: imageWidth,
-            height: imageLength,
-            pixels: pixels,
-        };
+        return new TiffImage(imageWidth, imageLength, pixels);
     }
 
     private function getOrDefault(tagMap : Map<Int, Array<Int>>, tagId : TagId, def : Array<Int>) : Array<Int> {
